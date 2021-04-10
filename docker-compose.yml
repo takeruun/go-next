@@ -1,0 +1,34 @@
+version: "3"
+services:
+  front:
+    build:
+      context: front
+      dockerfile: Dockerfile
+    command: yarn dev
+    volumes:
+      - ./front:/app
+    ports:
+      - "3000:3000"
+    tty: true
+    stdin_open: true
+  api:
+    build:
+      context: api
+      dockerfile: Dockerfile
+    volumes:
+      - ./api:/go/src/app
+    ports:
+      - "8080:8080"
+    tty: true
+    stdin_open: true
+  db:
+    image: mysql:8.0.16
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: password
+
+volumes:
+  mysql-data:
