@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  namespace: go-next
+  name: go-next-ing
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        backend:
+          serviceName: api
+          servicePort: 8080
