@@ -47,13 +47,13 @@ func main() {
     },
 	}))
 
-	r.GET("/", func(c *gin.Context) {
+	r.GET("/api", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "hello",
 		})
 	})
 
-  r.GET("/users", func(c *gin.Context) {
+  r.GET("/api/users", func(c *gin.Context) {
     db := dbConnect()
     var users []User
     db.Order("created_at asc").Find(&users)
@@ -64,7 +64,7 @@ func main() {
     })
   })
 
-  r.POST("/users", func(c *gin.Context) {
+  r.POST("/api/users", func(c *gin.Context) {
     var req User
     c.BindJSON(&req)
 
@@ -80,7 +80,7 @@ func main() {
     })
   })
 
-  r.DELETE("/users/:id", func(c *gin.Context) {
+  r.DELETE("/api/users/:id", func(c *gin.Context) {
     db := dbConnect()
     n := c.Param("id")
     id, err := strconv.Atoi(n)
