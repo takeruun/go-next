@@ -7,6 +7,7 @@ RUN apk update && apk --no-cache add git build-base
 
 RUN go get github.com/pilu/fresh && \
   go get github.com/gin-gonic/gin && \
+  go get github.com/gin-contrib/cors && \
   go get github.com/rubenv/sql-migrate/... && \
   go get github.com/go-sql-driver/mysql && \
   go get github.com/jinzhu/gorm
