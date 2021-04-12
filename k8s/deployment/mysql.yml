@@ -1,4 +1,4 @@
-apiVersion: app/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: go-next
@@ -7,12 +7,12 @@ spec:
   selector:
     matchLabels:
       app: mysql
-    strategy:
-      type: Recreate
-    template:
-      metadata:
-        lables:
-          app: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
     spec:
       containers:
       - name: mysql
