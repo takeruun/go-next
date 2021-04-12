@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
   "strconv"
+  "os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-contrib/cors"
@@ -100,10 +101,10 @@ func main() {
 
 func dbConnect() (database *gorm.DB) {
 	DBMS := "mysql"
-	USER := "root"
-	PASS := "password"
-	PROTOCOL := "tcp(db:3306)"
-	DBNAME := "go-next_development"
+	USER := os.Getenv("MYSQL_USER")
+	PASS := os.Getenv("MYSQL_ROOT_PASSWORD")
+	PROTOCOL := "tcp(" + os.Getenv("DB_HOST") + ":3306)"
+	DBNAME := os.Getenv("DB_NAME")
 
 	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME + "?charset=utf8mb4&collation=utf8mb4_general_ci&parseTime=true"
 
