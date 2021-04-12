@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   front:
     build:
@@ -8,7 +8,7 @@ services:
     volumes:
       - ./front:/app
     ports:
-      - '3000:3000'
+      - "3000:3000"
     tty: true
     stdin_open: true
   api:
@@ -18,11 +18,12 @@ services:
     volumes:
       - ./api:/go/src/app
     ports:
-      - '8080:8080'
+      - "8080:8080"
     tty: true
     stdin_open: true
   db:
-    image: mysql:8.0.16
+    build:
+      context: db
     command: mysqld --default-authentication-plugin=mysql_native_password
     volumes:
       - mysql-data:/var/lib/mysql
