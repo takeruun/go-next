@@ -15,11 +15,16 @@ export default function Home() {
           Welcome to <a href="/">Go Next app</a>
         </h1>
         <div>
-          <UserForm/>
+          <UserForm />
+        </div>
+        <br />
+        <p>-----------------------------</p>
+        <div>
+          <Users />
         </div>
       </main>
     </div>
-  )
+  );
 }
 
 class UserForm extends React.Component {
@@ -49,12 +54,13 @@ class UserForm extends React.Component {
 
   handleSubmit(event){
     request
-      .post('htpp://localhost:8080/users/')
-      .set("content-type", "application/json")
+      .post('http://localhost:8080/users')
+      .set("Content-Type", "application/json")
       .send({ name: this.state.name, email: this.state.email })
       .end((err, res) => {
         console.log(res)
-      })
+      });
+    this.setState({ name: '', email: '' });
     event.preventDefault();
   }
 
@@ -74,5 +80,52 @@ class UserForm extends React.Component {
         <input type="submit" value="Submit" />
       </form>
     )
+  }
+}
+
+class Users extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { users: [] };
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    request
+      .get('http://localhost:8080/users')
+      .end((err, res) => {
+        this.setState({ users: res.body.users })
+      });
+  }
+
+  renderUserLists() {
+    return this.state.users.map((user, index) => {
+      return (
+        <div key={index}>
+          <li>
+            <ul>
+              {user.name}
+            </ul>
+            <ul>
+              {user.email}
+            </ul>
+            <ul>
+              {user.created_at}
+            </ul>
+          </li>
+        </div>
+      );
+    })
+  }
+
+  render() {
+    return (
+      <React.Fragment>
+      <button onClick={this.handleClick}>get users</button>
+      {(() => {
+        if (this.state.users) return <ul>{this.renderUserLists()}</ul>;
+      })()}
+    </React.Fragment>
+    );
   }
 }
