@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: api
-        image: takedock/go-next_api:latest
+        image: takedock/go-next_api
         imagePullPolicy: Always
         command: ["go", "run", "main.go"]
         envFrom:

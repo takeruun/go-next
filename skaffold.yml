@@ -1,0 +1,24 @@
+apiVersion: skaffold/v2beta13
+kind: Config
+build:
+  tagPolicy:
+    sha256: {}
+  artifacts:
+  - image: takedock/go-next_api
+    context: api
+    docker:
+      dockerfile: Dockerfile
+  - image: takedock/go-next_front
+    context: front
+    docker:
+      dockerfile: Dockerfile.prod
+  local:
+    push: true
+deploy:
+  kubectl:
+    manifests:
+    - k8s/ingress.yml
+    - k8s/config/*.yml
+    - k8s/deployment/*.yml
+    - k8s/service/*.yml
+    - k8s/volumes/*.yml
