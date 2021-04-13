@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: go-next
+  name: front
+spec:
+  selector:
+    matchLabels:
+      app: front
+  template:
+    metadata:
+      labels:
+        app: front
+    spec:
+      containers:
+      - name: front
+        image: takedock/go-next_front
+        imagePullPolicy: Always
+        command: ["yarn", "start"]
+        ports:
+        - containerPort: 3000

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: go-next
+  name: api
+spec:
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+      - name: api
+        image: takedock/go-next_api
+        imagePullPolicy: Always
+        command: ["go", "run", "main.go"]
+        envFrom:
+        - configMapRef:
+            name: go-config
+        ports:
+        - containerPort: 8080
+

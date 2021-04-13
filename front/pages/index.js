@@ -2,6 +2,7 @@ import Head from 'next/head'
 import React from 'react'
 import request from 'superagent'
 import styles from '../styles/Home.module.css'
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:8080'
 
 export default function Home() {
   return (
@@ -54,7 +55,7 @@ class UserForm extends React.Component {
 
   handleSubmit(event){
     request
-      .post('http://localhost:8080/users')
+      .post(baseUrl + '/users')
       .set("Content-Type", "application/json")
       .send({ name: this.state.name, email: this.state.email })
       .end((err, res) => {
@@ -92,7 +93,7 @@ class Users extends React.Component {
 
   handleClick() {
     request
-      .get('http://localhost:8080/users')
+      .get(baseUrl + '/users')
       .end((err, res) => {
         this.setState({ users: res.body.users })
       });

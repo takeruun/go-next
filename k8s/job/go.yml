@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  namespace: go-next
+  name: setup
+spec:
+  template:
+    metadata:
+      name: setup
+    spec:
+      containers:
+      - name: setup
+        image: takedock/go-next_api:latest
+        imagePullPolicy: Always
+        command: ["/bin/ash"]
+        args: ["-c", "sql-migrate up -config=config/dbconfig.yml"]
+        envFrom:
+        - configMapRef:
+            name: go-config
+      restartPolicy: Never

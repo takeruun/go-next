@@ -1,0 +1,10 @@
+FROM node:15.14.0-alpine
+
+ENV LANG=C.UTF-8 \
+    TZ=Asia/Tokyo
+
+WORKDIR /app
+
+ADD . .
+
+RUN NODE_ENV=production yarn build
