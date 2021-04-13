@@ -7,6 +7,7 @@ spec:
   selector:
     matchLabels:
       app: api
+  replicas: 1
   template:
     metadata:
       labels:
@@ -15,6 +16,10 @@ spec:
       containers:
       - name: api
         image: takedock/go-next_api
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
         imagePullPolicy: Always
         command: ["go", "run", "main.go"]
         envFrom:
