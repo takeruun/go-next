@@ -2,7 +2,7 @@ import Head from 'next/head'
 import React from 'react'
 import request from 'superagent'
 import styles from '../styles/Home.module.css'
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:8080'
+const baseUrl = process.env.API_URL || 'http://localhost:8080'
 
 export default function Home() {
   return (
