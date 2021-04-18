@@ -11,3 +11,5 @@ variable "app_name" {
   type    = string
   default = "go-next"
 }
+
+variable "domain" {}
