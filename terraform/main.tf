@@ -29,3 +29,16 @@ module "elb" {
   sub_acm_id        = module.subdomain_acm.sub_acm_id
   domain            = var.domain
 }
+
+module "rds" {
+  source = "./rds"
+
+  app_name    = var.app_name
+  db_name     = var.db_name
+  db_user     = var.db_user
+  db_password = var.db_password
+
+  vpc_id                = module.network.vpc_id
+  alb_security_group_id = module.elb.alb_security_group_id
+  private_subnet_ids    = module.network.private_subnet_ids
+}
