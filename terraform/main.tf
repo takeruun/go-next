@@ -42,3 +42,9 @@ module "rds" {
   alb_security_group_id = module.elb.alb_security_group_id
   private_subnet_ids    = module.network.private_subnet_ids
 }
+
+module "ecs_cluster" {
+  source = "./ecs_cluster"
+
+  app_name = var.app_name
+}
