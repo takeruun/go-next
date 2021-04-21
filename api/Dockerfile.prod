@@ -1,36 +1,10 @@
-FROM golang:1.15 as ssm-builder
-
-RUN apt -y update && apt -y upgrade && apt -y install rpm tar gzip wget zip && apt clean all
-
-ARG SSM_AGENT_VERSION=3.0.1031.0
-RUN wget -q https://github.com/aws/amazon-ssm-agent/archive/${SSM_AGENT_VERSION}.tar.gz && \
-  tar xzf ${SSM_AGENT_VERSION}.tar.gz && \
-  mv amazon-ssm-agent-${SSM_AGENT_VERSION} /amazon-ssm-agent && \
-  echo ${SSM_AGENT_VERSION} > /amazon-ssm-agent/VERSION
-
-WORKDIR /amazon-ssm-agent
-
-RUN gofmt -w agent && make checkstyle || ./Tools/bin/goimports -w agent
-RUN make build-linux
-
 FROM golang:1.16.3
 
-RUN apt-get update && apt-get install -y git jq sudo unzip python-dev
+RUN apt-get update && apt-get install -y sudo
 
-RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip" && \
-  unzip awscli-bundle.zip && \
-  ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws && \
-  rm -rf ./awscli-bundle awscli-bundle.zip
-
-#RUN adduser -D ssm-user && \
-#  echo "Set disable_coredump false" >> /etc/sudo.conf && \
-#  echo "ssm-user ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ssm-agent-users && \
-#  mkdir -p /etc/amazon/ssm
-
-COPY --from=ssm-builder /amazon-ssm-agent/bin/linux_amd64/ /usr/bin
-COPY --from=ssm-builder /amazon-ssm-agent/bin/amazon-ssm-agent.json.template /etc/amazon/ssm/amazon-ssm-agent.json
-COPY --from=ssm-builder /amazon-ssm-agent/bin/seelog_unix.xml /etc/amazon/ssm/seelog.xml
-
+RUN mkdir /tmp/ssm
+RUN wget https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/debian_amd64/amazon-ssm-agent.deb -O /tmp/ssm/amazon-ssm-agent.deb
+RUN sudo dpkg -i /tmp/ssm/amazon-ssm-agent.deb
 
 WORKDIR /go/src/app
 COPY go.mod go.sum ./
@@ -38,4 +12,4 @@ RUN go mod download
 COPY . .
 
 COPY docker-entrypoint.sh /
-#CMD ["/usr/bin/amazon-ssm-agent"]
+CMD ["/docker-entrypoint.sh"]
