@@ -1,9 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
+export AWS_REGION=${AWS_REGION}
+export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
 
-AWS_REGION=${AWS_REGION:-}
 SSM_ACTIVATION=$(aws ssm create-activation --default-instance-name "fargate-ssm" --iam-role "service-role/AmazonEC2RunCommandRoleForManagedInstances" --registration-limit 1 --region $AWS_REGION)
 
 export SSM_ACTIVATION_CODE=$(echo $SSM_ACTIVATION | jq -r .ActivationCode)
