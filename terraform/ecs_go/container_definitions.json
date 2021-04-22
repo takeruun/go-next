@@ -23,7 +23,7 @@
       "name": "go-next_api",
       "image":"${account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/go-next_api:latest",
       "essential": true,
-      "memory": 128,
+      "memory": 256,
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
