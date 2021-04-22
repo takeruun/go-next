@@ -47,6 +47,12 @@ func main() {
     },
 	}))
 
+  r.GET("/health", func(c *gin.Context) {
+    c.JSON(200, gin.H{
+      "status": "OK",
+    })
+  })
+
 	r.GET("/api", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "hello",
@@ -101,10 +107,10 @@ func main() {
 
 func dbConnect() (database *gorm.DB) {
 	DBMS := "mysql"
-	USER := os.Getenv("MYSQL_USER")
-	PASS := os.Getenv("MYSQL_ROOT_PASSWORD")
-	PROTOCOL := "tcp(" + os.Getenv("DB_HOST") + ":3306)"
-	DBNAME := os.Getenv("DB_NAME")
+	USER := os.Getenv("RDS_USER")
+	PASS := os.Getenv("RDS_PASSWORD")
+	PROTOCOL := "tcp(" + os.Getenv("RDS_HOST") + ":3306)"
+	DBNAME := os.Getenv("RDS_DB_NAME")
 
 	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME + "?charset=utf8mb4&collation=utf8mb4_general_ci&parseTime=true"
 
