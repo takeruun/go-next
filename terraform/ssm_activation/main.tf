@@ -5,8 +5,8 @@ module "ssm_ec2_run_role" {
   policy_arn = [data.aws_iam_policy.ssm_managed_instance_core.arn, data.aws_iam_policy.ssm_directory_service_access.arn]
 }
 
-resource "aws_ssm_activation" "foo" {
+resource "aws_ssm_activation" "this" {
   name               = "${var.app_name}-ssm"
   iam_role           = module.ssm_ec2_run_role.iam_role_name
-  registration_limit = "1"
+  registration_limit = "5"
 }
