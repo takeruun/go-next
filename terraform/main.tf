@@ -48,3 +48,9 @@ module "ecs_cluster" {
 
   app_name = var.app_name
 }
+
+module "ssm_activation" {
+  source = "./ssm_activation"
+
+  app_name = var.app_name
+}
