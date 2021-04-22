@@ -5,3 +5,7 @@ data "aws_iam_policy" "ssm_managed_instance_core" {
 data "aws_iam_policy" "ssm_directory_service_access" {
   arn = "arn:aws:iam::aws:policy/AmazonSSMDirectoryServiceAccess"
 }
+
+data "aws_iam_policy" "cloud_watch_agent_server_policy" {
+  arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+}
