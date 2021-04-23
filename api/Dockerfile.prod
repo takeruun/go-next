@@ -8,6 +8,7 @@ RUN wget https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/debian_a
   && cp /etc/amazon/ssm/seelog.xml.template /etc/amazon/ssm/seelog.xml
 
 WORKDIR /go/src/app
+RUN go get github.com/rubenv/sql-migrate/...
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
