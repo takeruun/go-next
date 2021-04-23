@@ -13,4 +13,4 @@ RUN go mod download
 COPY . .
 
 COPY docker-entrypoint.sh /
-CMD ["/docker-entrypoint.sh"]
+ENTRYPOINT [ "/docker-entrypoint.sh" ]
