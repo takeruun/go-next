@@ -10,6 +10,7 @@ import (
 	"github.com/gin-contrib/cors"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
+  "github.com/rubenv/sql-migrate"
 )
 
 type User struct {
