@@ -1,0 +1,8 @@
+{
+  "containerOverrides": [
+      {
+          "name": "go-next_api",
+          "command": ["sql-migrate", "up", "-config=config/dbconfig.yml"]
+      }
+  ]
+}
