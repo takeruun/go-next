@@ -9,7 +9,7 @@ resource "aws_security_group" "this" {
   }
 
   tags = {
-    Name = "${var.app_name}-sg"
+    Name = "${var.app_name}-rds-sg"
   }
 }
 
