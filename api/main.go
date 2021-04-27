@@ -44,6 +44,7 @@ func main() {
     // 許可したいアクセス元の一覧
     AllowOrigins: []string{
       "http://localhost:3000",
+      os.Getenv("FRONT_URL"),
     },
 	}))
 

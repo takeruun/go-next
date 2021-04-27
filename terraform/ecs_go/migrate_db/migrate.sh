@@ -9,4 +9,6 @@ assignPublicIp=`echo $output | jq -r '.awsvpcConfiguration.assignPublicIp'`
 aws ecs run-task \
   --cluster go-next-cluster \
   --task-definition go-next-task \
+  --launch-type FARGATE \
+  --overrides file://run_db_migrate.json \
   --network-configuration "awsvpcConfiguration={subnets=[${subnets}],securityGroups=[${securityGroups}],assignPublicIp=${assignPublicIp}}"

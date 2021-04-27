@@ -61,6 +61,10 @@
         {
           "name": "SSM_AGENT_ID",
           "value": "${ssm_agent_id}"
+        },
+        {
+          "name": "FRONT_URL",
+          "value": "https://t-farm.ml"
         }
       ],
       "portMappings": [
